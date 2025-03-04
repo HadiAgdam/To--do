@@ -114,9 +114,9 @@ from models import Revenge
     if response.status_code != 200 or not response.json():
       return False
   
-  revenges = [Revenge(id=t['id'], name=t['name'], reason=t['reason'], vulnerabilities=t['vulnerabilities']) for t in response.json()]
+    revenges = [Revenge(id=t['id'], name=t['name'], reason=t['reason'], vulnerabilities=t['vulnerabilities']) for t in response.json()]
   
-  return revenges
+    return revenges
   
     
   
