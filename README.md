@@ -68,31 +68,21 @@ A private key is stored in my device and in the Workers secrets. The rolling pas
 
 class Revenge:
 
-def __init__(self, name: str, reason: str, vulnerabilities: str, id: str = None):
-
-self.name = name
-
-self.reason = reason
-
-self.vulnerabilities = vulnerabilities
-
-self.id = id
+  def __init__(self, name: str, reason: str, vulnerabilities: str, id: str = None):
+    self.name = name
+    self.reason = reason
+    self.vulnerabilities = vulnerabilities
+    self.id = id
 
   
 
-def to_dict(self) -> dict:
-
-return {
-
-"id": self.id,
-
-"name": self.name,
-
-"reason": self.reason,
-
-"vulnerabilities": self.vulnerabilities
-
-}
+  def to_dict(self) -> dict:
+    return {
+      "id": self.id,
+      "name": self.name,
+      "reason": self.reason,
+      "vulnerabilities": self.vulnerabilities
+    }
 
 ```
 
@@ -110,37 +100,30 @@ from models import Revenge
 
   
 
-class RevengeRepo:
-
-def add_revenge(self, auth_key: str, revenge: Revenge):
-
-response = requests.post(f"{constants.API_BASE}/revenge", json=revenge.to_dict(), headers={"Authorization": auth_key})
-
-return response.status_code == 200
-
+  class RevengeRepo:
   
-
-def list_revenge(self, auth_key: str):
-
-response = requests.get(f"{constants.API_BASE}/revenge", headers={"Authorization": auth_key})
-
-if response.status_code != 200 or not response.json():
-
-return False
-
+  def add_revenge(self, auth_key: str, revenge: Revenge):
+    response = requests.post(f"{constants.API_BASE}/revenge", json=revenge.to_dict(), headers={"Authorization": auth_key})
+    return response.status_code == 200
   
-
-revenges = [Revenge(id=t['id'], name=t['name'], reason=t['reason'], vulnerabilities=t['vulnerabilities']) for t in response.json()]
-
-return revenges
-
+    
   
-
-def delete_revenge(self, auth_key: str, revenge_id: str):
-
-response = requests.delete(f"{constants.API_BASE}/revenge/{revenge_id}", headers={"Authorization": auth_key})
-
-return response.status_code == 200
+  def list_revenge(self, auth_key: str):
+    response = requests.get(f"{constants.API_BASE}/revenge", headers={"Authorization": auth_key})
+  
+    if response.status_code != 200 or not response.json():
+      return False
+  
+  revenges = [Revenge(id=t['id'], name=t['name'], reason=t['reason'], vulnerabilities=t['vulnerabilities']) for t in response.json()]
+  
+  return revenges
+  
+    
+  
+  def delete_revenge(self, auth_key: str, revenge_id: str):
+  
+    response = requests.delete(f"{constants.API_BASE}/revenge/{revenge_id}", headers={"Authorization": auth_key})
+    return response.status_code == 200
 
 ```
 
