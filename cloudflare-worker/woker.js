@@ -7,7 +7,7 @@ export default {
     const path = url.pathname;
 
     if (!this.verifyAuth(request, env.SECRET_KEY)) {
-      return new Response("Unauthorized\n" + await this.hash(env.SECRET_KEY + Math.floor(Date.now() / 13000)) + "\n" + request.headers.get("Authorization"), {status: 401 });
+      return new Response("Unauthorized", {status: 401 });
     }
 
     if (path.startsWith("/revenge")) {
@@ -27,7 +27,7 @@ export default {
     const auth = request.headers.get("Authorization");
 
     return this.hash(secretKey + Math.floor(Date.now() / rollingDuration))
-    ||  this.hash(secretKey + Math.floor((Date.now() / rollingDuration) - 1)) // 1 sec before too
+    ||  this.hash(secretKey + Math.floor((Date.now() / rollingDuration) - 1)) // 1 password before too
 
   },
 
